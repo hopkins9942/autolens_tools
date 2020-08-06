@@ -58,6 +58,7 @@ if not os.path.exists(save_path):
 import autolens as al
 import autolens.plot as aplt
 import datetime
+from scipy.optimize import fsolve
 
 print("Generating:")
 print(datetime.datetime.now())
@@ -73,54 +74,33 @@ dark_profile=al.mp.SphericalTruncatedNFWMCRLudlow(
         redshift_source = redshift_source,
     )
 
-def structure_profile(mass_to_light_ratio):
+def sersic_profile(intensity):
     return al.mp.EllipticalSersic(
         centre = (0.0, 0.0),
         elliptical_comps = sersic_elliptical_comps,
         effective_radius = 1.2,
         sersic_index = 4,
-        mass_to_light_ratio = mass_to_light_ratio,
+        intensity = intensity,
         )
 
-def mlr_setter(target):
+def intensity_setter(target_e_radius):
     """
-    For given profiles, calculates mass to light ratio that gives correct Einstein radius
+    For given profiles, calculates intensity that gives correct Einstein radius
     """
-    print("\nsetting mlr:")
+    print("\nsetting intensity:")
     print(datetime.datetime.now())
-    mlr = 1.6 #best value for target=1
-    difference = 0.1
-    tolerance = 1e-2
-    e_radius_list = [
-        al.Galaxy(0.5, light=structure_profile(mlr - difference), dark=dark_profile).einstein_radius_in_units(),
-        al.Galaxy(0.5, light=structure_profile(mlr             ), dark=dark_profile).einstein_radius_in_units(),
-        al.Galaxy(0.5, light=structure_profile(mlr + difference), dark=dark_profile).einstein_radius_in_units(),
-        ]
-    for i in range(100):
-        print(f"\ni = {i}, mlr = {mlr}, difference = {difference},\ne_radius_list=\n{e_radius_list}")
-        print(datetime.datetime.now())
-        if (e_radius_list[0]<target) and (target<e_radius_list[2]):
-            if abs(e_radius_list[1]-e_radius_list[0])>tolerance or abs(e_radius_list[1]-e_radius_list[2])>tolerance:
-                difference *= 0.1
-                e_radius_list[0] = al.Galaxy(0.5, light=structure_profile(mlr - difference), dark=dark_profile).einstein_radius_in_units()
-                e_radius_list[2] = al.Galaxy(0.5, light=structure_profile(mlr + difference), dark=dark_profile).einstein_radius_in_units()
-            else:
-                break
-        elif (e_radius_list[1]<target):
-            mlr += difference
-            e_radius_list[0:2] = e_radius_list[1:3]
-            e_radius_list[2] = al.Galaxy(0.5, light=structure_profile(mlr + difference), dark=dark_profile).einstein_radius_in_units()
-        else:
-            mlr -= difference
-            e_radius_list[1:3] = e_radius_list[0:2]
-            e_radius_list[0] = al.Galaxy(0.5, light=structure_profile(mlr - difference), dark=dark_profile).einstein_radius_in_units()
-    print(f"\nfinal mlr: {mlr}, final e_radius_list: \n{e_radius_list}")
-    print(datetime.datetime.now())
-    return mlr
+    
+    def func(intensity):
+        value = al.Galaxy(0.5, sersic=sersic_profile(intensity), dark=dark_profile).einstein_radius_in_units() - target_e_radius
+        print(f"Intensity: {intensity}")
+        print(f"Value: {value}")
+        return value
+    
+    return fsolve(func, 0.1, xtol=1e-3)
 
 lens_galaxy = al.Galaxy(
     redshift=redshift_lens,
-    structure=structure_profile(mlr_setter(einstein_radius)),
+    sersic=sersic_profile(intensity_setter(einstein_radius)),
     dark=dark_profile,
 )
 

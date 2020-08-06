@@ -1,0 +1,7 @@
+phase=phase_1
+phase_tag=settings__grid_sub_2
+pipeline=
+pipeline_tag=
+dataset_name=(0.111, 0.0)_(-0.333, 0.0)_12.0_1.1_0.9_(0.1, 0.1)_(0.0, 0.0)_0.2name=phase_1
+tag=settings__grid_sub_2
+non_linear_search=dynestystatic

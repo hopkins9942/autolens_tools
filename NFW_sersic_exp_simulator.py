@@ -65,7 +65,7 @@ if not os.path.exists(save_path):
 import autolens as al
 import autolens.plot as aplt
 import datetime
-from scipy import fsolve
+from scipy.optimize import fsolve
 
 print("Generating:")
 print(datetime.datetime.now())
@@ -111,42 +111,13 @@ def intensity_setter(target_e_radius, target_mass_ratio):
                                   exp=exp,
                                   dark=dark_profile
                                   ).einstein_radius_in_units()
-        temp_mass_ratio = sersic.mass_in_circle_in_units(10)/exp.mass_in_circle_in_units(10)
-        return [temp_e_radius - target_e_radius, temp_mass_ratio - target_mass_ratio]
-    
-    
-    
+        temp_mass_ratio = sersic.mass_within_circle_in_units(10)/exp.mass_within_circle_in_units(10)
+        values = [temp_e_radius - target_e_radius, temp_mass_ratio - target_mass_ratio]
+        print(f"Intensities: {intensities}")
+        print(f"Values: {values}")
+        return values
     
     return fsolve(func, [0.1,0.1], xtol=1e-3)
-    
-    # difference = 0.01
-    # tolerance = 1e-2
-    # e_radius_list = [
-    #     al.Galaxy(0.5, sersic=sersic_profile(intensity - difference), exp=exp_profile(intensity - difference), dark=dark_profile).einstein_radius_in_units(),
-    #     al.Galaxy(0.5, sersic=sersic_profile(intensity             ), exp=exp_profile(intensity             ), dark=dark_profile).einstein_radius_in_units(),
-    #     al.Galaxy(0.5, sersic=sersic_profile(intensity + difference), exp=exp_profile(intensity + difference), dark=dark_profile).einstein_radius_in_units(),
-    #     ]
-    # for i in range(100):
-    #     print(f"\ni = {i}, intensity = {intensity}, difference = {difference},\ne_radius_list=\n{e_radius_list}")
-    #     print(datetime.datetime.now())
-    #     if (e_radius_list[0]<target) and (target<e_radius_list[2]):
-    #         if abs(e_radius_list[1]-e_radius_list[0])>tolerance or abs(e_radius_list[1]-e_radius_list[2])>tolerance:
-    #             difference *= 0.1
-    #             e_radius_list[0] = al.Galaxy(0.5, light1=structure_profile1(intensity - difference), light2=structure_profile2(intensity - difference), dark=dark_profile).einstein_radius_in_units()
-    #             e_radius_list[2] = al.Galaxy(0.5, light1=structure_profile1(intensity + difference), light2=structure_profile2(intensity + difference), dark=dark_profile).einstein_radius_in_units()
-    #         else:
-    #             break
-    #     elif (e_radius_list[1]<target):
-    #         intensity += difference
-    #         e_radius_list[0:2] = e_radius_list[1:3]
-    #         e_radius_list[2] = al.Galaxy(0.5, light1=structure_profile1(intensity + difference), light2=structure_profile2(intensity + difference), dark=dark_profile).einstein_radius_in_units()
-    #     else:
-    #         intensity -= difference
-    #         e_radius_list[1:3] = e_radius_list[0:2]
-    #         e_radius_list[0] = al.Galaxy(0.5, light1=structure_profile1(intensity - difference), light2=structure_profile2(intensity - difference), dark=dark_profile).einstein_radius_in_units()
-    # print(f"\nfinal intensity: {intensity}, final e_radius_list: \n{e_radius_list}")
-    # print(datetime.datetime.now())
-    #return intensity
 
 intensities = intensity_setter(einstein_radius, mass_ratio)
 
