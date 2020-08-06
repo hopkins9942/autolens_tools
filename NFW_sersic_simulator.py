@@ -3,7 +3,7 @@
 """
 Created on Tue Aug  4 19:12:36 2020
 
-@author: hopkins9942
+@author: matthew
 
 Simulates image of lens system with an NFW + Sersic lens, with parameters entered as command line arguments.
 
@@ -11,12 +11,12 @@ To add:
     save positions of lensed images
 """
 
-
-import autolens as al
-import autolens.plot as aplt
+#Configuration
+from autoconf import conf
 import os
-import datetime
 import sys
+
+workspace_path = "/home/matthew/Durham2020/AutoLensWorkspace/autolens_workspace/" 
 
 #Params - from command line arguments
 sersic_elliptical_comps_0=float(sys.argv[1])
@@ -34,8 +34,7 @@ source_centre = (source_centre_0, source_centre_1)
 source_elliptical_comps = (source_elliptical_comps_0, source_elliptical_comps_1)
 
 
-print("Generating:")
-print(datetime.datetime.now())
+
 
 dataset_name = "_".join((
                       str(sersic_elliptical_comps),
@@ -47,9 +46,22 @@ dataset_name = "_".join((
 
 save_path= "/home/matthew/Durham2020/MyScripts/autolens_tools/ExampleData/NFW_sersic/" + dataset_name + "/"
 
+conf.instance = conf.Config(
+    config_path=f"{workspace_path}config/", output_path=save_path,
+)
+
 if not os.path.exists(save_path):
     os.makedirs(save_path)
-    
+
+
+#Script
+import autolens as al
+import autolens.plot as aplt
+import datetime
+
+print("Generating:")
+print(datetime.datetime.now())
+
 redshift_lens = 0.5
 redshift_source = 1.0
 

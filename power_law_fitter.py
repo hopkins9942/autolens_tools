@@ -25,7 +25,7 @@ workspace_path = "/home/matthew/Durham2020/AutoLensWorkspace/autolens_workspace/
 
 dataset_name = sys.argv[2]
 output_path = os.path.join(data_path, dataset_name) + '/'
-mask_radius = sys.argv[3]
+mask_radius = float(sys.argv[3])
     
 conf.instance = conf.Config(
     config_path=f"{workspace_path}config/", output_path=output_path,

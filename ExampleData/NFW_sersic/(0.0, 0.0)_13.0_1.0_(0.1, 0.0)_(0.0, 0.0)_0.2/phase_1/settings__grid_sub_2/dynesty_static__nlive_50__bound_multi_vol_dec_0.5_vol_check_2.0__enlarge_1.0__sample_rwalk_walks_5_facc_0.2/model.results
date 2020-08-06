@@ -1,0 +1,76 @@
+Bayesian Evidence                                                                         10830.53150300
+Maximum Likelihood                                                                        10890.80415980
+
+Maximum Log Likelihood Model:
+
+galaxies
+    lens_model_1
+        mass
+            elliptical_comps
+                elliptical_comps_0                                                        -0.000
+                elliptical_comps_1                                                        -0.001
+            einstein_radius                                                               1.003
+    source_model_1
+        light
+            centre
+                centre_0                                                                  0.092
+                centre_1                                                                  -0.000
+            elliptical_comps
+                elliptical_comps_0                                                        -0.003
+                elliptical_comps_1                                                        0.004
+            intensity                                                                     0.151
+            effective_radius                                                              0.182
+
+
+Median PDF model (3.0 sigma limits):
+
+galaxies
+    lens_model_1
+        mass
+            elliptical_comps
+                elliptical_comps_0                                                        -0.000 (-0.001, 0.001)
+                elliptical_comps_1                                                        -0.001 (-0.002, -0.000)
+            einstein_radius                                                               1.003 (1.002, 1.003)
+    source_model_1
+        light
+            centre
+                centre_0                                                                  0.092 (0.091, 0.092)
+                centre_1                                                                  -0.000 (-0.000, 0.001)
+            elliptical_comps
+                elliptical_comps_0                                                        -0.001 (-0.004, 0.002)
+                elliptical_comps_1                                                        0.002 (-0.001, 0.005)
+            intensity                                                                     0.151 (0.150, 0.151)
+            effective_radius                                                              0.182 (0.182, 0.183)
+
+
+Median PDF model (1.0 sigma limits):
+
+galaxies
+    lens_model_1
+        mass
+            elliptical_comps
+                elliptical_comps_0                                                        -0.000 (-0.000, 0.000)
+                elliptical_comps_1                                                        -0.001 (-0.001, -0.001)
+            einstein_radius                                                               1.003 (1.003, 1.003)
+    source_model_1
+        light
+            centre
+                centre_0                                                                  0.092 (0.092, 0.092)
+                centre_1                                                                  -0.000 (-0.000, 0.000)
+            elliptical_comps
+                elliptical_comps_0                                                        -0.001 (-0.002, -0.000)
+                elliptical_comps_1                                                        0.002 (0.002, 0.003)
+            intensity                                                                     0.151 (0.150, 0.151)
+            effective_radius                                                              0.182 (0.182, 0.183)
+
+instances
+
+galaxies
+    lens_model_1
+        redshift                                                                          0.5
+        mass
+            centre
+                centre_0                                                                  0.0
+                centre_1                                                                  0.0
+    source_model_1
+        redshift                                                                          1.0
