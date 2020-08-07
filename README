@@ -1,0 +1,11 @@
+autolens_tools: Analysis tools and example scripts for PyAutoLens
+
+NFW_sersic_simulator.py simulates images of lens systems with realistic lens galaxies composed of an NFW profile to represent the dark matter mass distribution and a sersic profile to represent the stellar matter mass distribution.
+
+NFW_sersic_exp_simulator.py simulates images of lens systems with realistic lens galaxies composed of an NFW profile to represent the dark matter mass distribution and both a sersic profile and an exponential profile to represent the stellar matter mass distribution.
+
+power_law_fitter.py fits images of lensing systems modelling the lens with a power law mass distribution using two linked phases, the first of which has the slope of the power law profile set to 2 (isothermal) and other simplifying assumtions that speed up the fitting process.
+
+Analyser.ipynb is a tool for easy analysis of completed phases using the aggregator, which compares the values of the parameters and the radial mass distributions of the true and fitted galaxies.
+
+ExampleData contains some data generated from the simulator scripts and fitted with power_law_fitter.py that can be loaded directly into the Analyser.ipynb tool as a demonstration.
