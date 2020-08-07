@@ -8,8 +8,6 @@ Created on Tue Aug  4 19:13:59 2020
 Simulates image of lens system with an NFW + Sersic + exp lens, with parameters entered as command line arguments.
 
 To add:
-    Test set values such as effective radii of sersics
-    tweak starting value in intensity setter
     save positions of lensed images
 """
 
